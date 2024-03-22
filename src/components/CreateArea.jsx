@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
+import SaveIcon from '@mui/icons-material/Save';
 
-
-
+const initialState = {
+  title: "",
+  content: ""
+}
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
-
-  const [note, setNote] = useState({
-    title: "",
-    content: ""
-  });
-
+  const [note, setNote] = useState(initialState);
   function handleChange(event) {
     const { name, value } = event.target;
-
     setNote(prevNote => {
       return {
         ...prevNote,
@@ -23,19 +20,26 @@ function CreateArea(props) {
       };
     });
   }
-
   function submitNote(event) {
-    props.onAdd(note);
-    setNote({
-      title: "",
-      content: ""
-    });
+    if (props.edit) {
+      props.update(note);
+    }
+    else {
+      props.onAdd(note);
+    }
+    setNote(initialState);
+
     event.preventDefault();
   }
 
   function expand() {
     setExpanded(true);
   }
+  useEffect(() => {
+    if (props.edit) {
+      setNote(props.edit)
+    }
+  }, [props.edit])
 
   return (
     <div>
@@ -59,7 +63,7 @@ function CreateArea(props) {
         />
         <Zoom in={isExpanded}>
           <Fab onClick={submitNote}>
-            <AddIcon />
+            {props.edit ? <SaveIcon /> : <AddIcon />}
           </Fab>
         </Zoom>
       </form>
