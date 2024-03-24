@@ -30,12 +30,13 @@ footer {
   background-color: #f5ba13;
   text-align: center;
   bottom: 0;
+  padding-top:10px;
   width: 100%;
   height: 2.5rem;
 }
 
 footer p {
-  color: #ccc;
+  color: white;
 }
 .note {
   background: #fff;
