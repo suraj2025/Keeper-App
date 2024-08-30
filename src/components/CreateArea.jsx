@@ -8,9 +8,11 @@ const initialState = {
   title: "",
   content: ""
 }
+
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
   const [note, setNote] = useState(initialState);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setNote(prevNote => {
@@ -20,11 +22,11 @@ function CreateArea(props) {
       };
     });
   }
+
   function submitNote(event) {
     if (props.edit) {
       props.update(note);
-    }
-    else {
+    } else {
       props.onAdd(note);
     }
     setNote(initialState);
@@ -35,6 +37,7 @@ function CreateArea(props) {
   function expand() {
     setExpanded(true);
   }
+
   useEffect(() => {
     if (props.edit) {
       setNote(props.edit)
@@ -68,6 +71,7 @@ function CreateArea(props) {
         </Zoom>
       </form>
     </div>
+
   );
 }
 
